@@ -1,26 +1,32 @@
 backend:
   name: git-gateway
   branch: main
+  # name: proxy
+  # proxy_url: http://localhost:8081/api/v1
+  # local_backend: true
 media_folder: "images/uploads"
 collections:
   - name: "sessions" # Used in routes, e.g., /admin/collections/blog
-    label: "Sessions" # Used in the UI
+    label: "Session" # Used in the UI
     folder: "_sessions" # The path to the folder where the documents are stored
     create: true # Allow users to create new documents in this collection
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    extension: "json"
+    format: "json"
     fields: # The fields for each document, usually in front matter
-      - { label: "Layout", name: "layout", widget: "hidden", default: "blog" }
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Featured Image", name: "thumbnail", widget: "image" }
       - { label: "Body", name: "body", widget: "markdown" }
       - { label: "Venue", name: "venue", widget: "string" }
 
-
-Collections
-Sessions
-
-- Title
-- Date
-- Body
-- Venue
+  - name: "index"
+    label: "Sessions Index"
+    folder: "_index"
+    create: true
+    extension: "json"
+    format: "json"
+    slug: "sessions-list"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Sessions", name: "sessions", widget: "list" }

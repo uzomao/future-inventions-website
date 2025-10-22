@@ -100,7 +100,7 @@
     }
 
     /* Event styling */
-    .event {
+    .session {
       border-top: 1px solid var(--accent);
       padding: 3rem 0;
       display: flex;
@@ -108,20 +108,20 @@
       align-items: center;
     }
 
-    .event:first-child {
+    .session:first-child {
       border-top: none;
     }
 
-    .event h3 {
+    .session h3 {
       margin: 0 0 0.25rem;
       font-size: 1.1rem;
     }
 
-    .event p {
-      margin: 0.25rem 0;
+    .session p {
+      margin: 1.5rem 0;
     }
 
-    .event a {
+    .session a {
       color: var(--text);
       text-decoration: underline;
     }
@@ -148,6 +148,7 @@
       }
     }
   </style>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 
@@ -196,39 +197,29 @@
     const tabs = document.querySelectorAll('.tab');
     const contents = document.querySelectorAll('.tab-content');
 
-    // --- Mock data ---
-    const mockEvents = {
-      upcoming: [
-        {
-          title: "Workshop: Ecological Computing",
-          date: "November 2024",
-          description: "Exploring biodegradable materials in hardware design.",
-          link: "#"
-        },
-        {
-          title: "Study Session: Post-Digital Crafts",
-          date: "Dec 10, 2025",
-          description: "Collective discussion on materiality in the age of AI.",
-          link: "#"
-        }
-      ],
-      archive: [
-        {
-          title: "Intro to Digital Colonialism",
-          date: "November 2024",
-          description: "Week-long residency examining off-grid networks.",
-          image: "/images/sessions/digital_colonialism_1.jpeg",
-          link: "#"
-        },
-        {
-          title: "Ancestral Technologies",
-          date: "February 2025",
-          description: "Artists and technologists discussing collaborative futures.",
-          image: "/images/sessions/ancestral_tech_2.jpeg",
-          link: "#"
-        }
-      ]
-    };
+    async function fetchSessions() {
+      try {
+        // Fetch the index first
+        const indexRes = await fetch('/_index/sessions-list.json');
+        if (!indexRes.ok) throw new Error('Failed to fetch session index');
+        
+        const { sessions: sessionSlugs } = await indexRes.json();
+
+        // Fetch each session JSON file based on its slug
+        const sessions = await Promise.all(
+          sessionSlugs.map(async (slug) => {
+            const res = await fetch(`/_sessions/${slug}.json`);
+            if (!res.ok) throw new Error(`Failed to fetch session: ${slug}`);
+            return await res.json();
+          })
+        );
+
+        return sessions;
+      } catch (err) {
+        console.error('Error fetching sessions:', err);
+        return [];
+      }
+    }
 
     function showTab(tabName) {
       contents.forEach(c => c.classList.remove('active'));
@@ -263,30 +254,51 @@
     //   const path = window.location.pathname.replace('/', '') || 'home';
     //   showTab(path);
     // });
+    function slugify(title) {
+      return title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '');
+    }
 
-    // --- Render events (shared logic) ---
-    function renderEvents(list, containerId) {
+    function renderSessions(list, containerId) {
       const container = document.getElementById(containerId);
       container.innerHTML = '';
-      list.forEach(event => {
+
+      list.forEach(item => {
+        const slug = slugify(item.title);
         const el = document.createElement('div');
-        el.className = 'event';
+        el.className = 'session';
         el.innerHTML = `
-          <img src="${event.image}" alt="${event.title}" style="width: 400px; height: auto;">
+          <img src="${item.thumbnail}" alt="${item.title}" style="width: 400px; height: auto;">
           <div>
-            <h3>${event.title}</h3>
-            <p><strong>${event.date}</strong></p>
-            <p>${event.description}</p>
-            <a href="${event.link}" target="_blank">Learn more</a>
+            <h3>${item.title}</h3>
+            <p><strong>${new Date(item.date).toLocaleDateString()}</strong></p>
+            <p>Venue: ${item.venue}</p>
+            <a href="/sessions.html?file=${slug}">Read Details</a>
           </div>
         `;
         container.appendChild(el);
       });
     }
 
-    // Initial render
-    renderEvents(mockEvents.upcoming, 'upcoming-events');
-    renderEvents(mockEvents.archive, 'archive-events');
+    (async () => {
+      const now = new Date();
+      const sessions = await fetchSessions();
+
+      const upcoming = sessions.filter(s => new Date(s.date) >= now);
+      const archive  = sessions.filter(s => new Date(s.date) < now);
+
+      renderSessions(upcoming, 'upcoming-events');
+      renderSessions(archive, 'archive-events');
+    })();
+
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", (user) => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
   </script>
 
 </body>

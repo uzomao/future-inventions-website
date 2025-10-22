@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Session Details</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: monospace, system-ui, sans-serif;
+      background: #372FD1;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 25%;
+    }
+    h1 { font-size: 36px; margin-bottom: 1rem; }
+    img { max-width: 100%; height: auto; margin-bottom: 1rem; }
+    p { line-height: 1.5; margin-bottom: 1rem; }
+    a { color: #caeeff; text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" style="align-self: flex-start;">← Back to sessions</a>
+  <div id="session-details" style="margin-top: 2rem;">
+    Loading session...
+  </div>
+
+  <script>
+    // Get session slug from query string
+    const params = new URLSearchParams(window.location.search);
+    const file = params.get('file'); // example: "2025-10-22-intro-to-digital-colonialism-london"
+
+    function parseMarkdown(markdown) {
+      if (!markdown) return '';
+
+      return markdown
+        // Convert headings: ## Heading → <h2>Heading</h2>
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        // Bold: **text**
+        .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+        // Italic: *text*
+        .replace(/\*(.*?)\*/gim, '<em>$1</em>')
+        // Links: [text](url)
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" target="_blank">$1</a>')
+        // Line breaks: two newlines → paragraph
+        .replace(/\n\s*\n/g, '</p><p>')
+        // Single newlines → <br>
+        .replace(/\n/g, '<br>')
+        // Wrap whole block in <p>
+        .replace(/^(.+)$/gim, '<p>$1</p>');
+    }
+
+    async function loadSession() {
+      if (!file) {
+        document.getElementById('session-details').innerHTML = "No session specified.";
+        return;
+      }
+
+      try {
+        const res = await fetch(`/_sessions/${file}.json`);
+        if (!res.ok) throw new Error("Failed to load session JSON");
+
+        const data = await res.json();
+        const bodyHtml = parseMarkdown(data.body);
+        const html = `
+          <h1>${data.title}</h1>
+          <p><strong>Date:</strong> ${new Date(data.date).toLocaleDateString()}</p>
+          <img src="${data.thumbnail}" alt="${data.title}">
+          <p>${bodyHtml}</p>
+          <p style="margin-top: 2rem"><strong>Venue:</strong> ${data.venue}</p>
+        `;
+        document.getElementById('session-details').innerHTML = html;
+      } catch (err) {
+        console.error(err);
+        document.getElementById('session-details').innerHTML = "Error loading session.";
+      }
+    }
+
+    loadSession();
+  </script>
+
+</body>
+</html>
