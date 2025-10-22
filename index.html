@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Future Inventions</title>
+  <style>
+    :root {
+      --bg: #372FD1;
+      --accent: #caeeff;
+      --text: #ffffff;
+      --highlight: #c4bfa8;
+    }
+
+    body {
+      margin: 0;
+      font-family: monospace, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    p {
+      line-height: 1.45;
+    }
+
+    header {
+      width: 100%;
+      margin-top: 2rem;
+    }
+
+    /* Folder-style tabs */
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0 2.5%;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .tab {
+      background: var(--text);
+      color: var(--bg);
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border: 1px solid var(--accent);
+      border-bottom: none;
+      transition: background 0.2s ease;
+    }
+
+    .tab.active {
+      background: var(--bg);
+      color: var(--text);
+      border-bottom: 2px solid var(--bg);
+      font-weight: 600;
+    }
+
+    .tab:hover {
+      background: var(--bg);
+      color: var(--text)
+    }
+
+    main {
+      width: 95%;
+      padding: 5% 0;
+      background: var(--bg);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    #home.tab-content.active {
+      display: flex;
+      align-items: center;
+      gap: 10%;
+    }
+
+    #home .intro-text {
+      width: 70%;
+    }
+
+    #home .logo {
+      width: 20%;
+      height: auto;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(0.5rem); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Event styling */
+    .event {
+      border-top: 1px solid var(--accent);
+      padding: 3rem 0;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .event:first-child {
+      border-top: none;
+    }
+
+    .event h3 {
+      margin: 0 0 0.25rem;
+      font-size: 1.1rem;
+    }
+
+    .event p {
+      margin: 0.25rem 0;
+    }
+
+    .event a {
+      color: var(--text);
+      text-decoration: underline;
+    }
+
+    footer {
+      margin: 2rem 0;
+      font-size: 0.85rem;
+      color: #555;
+    }
+
+    /* Responsive design */
+    @media (max-width: 600px) {
+      .tabs {
+        flex-direction: column;
+        border-bottom: none;
+      }
+      .tab {
+        border-radius: 0.5rem;
+        border: 1px solid var(--accent);
+      }
+      .tab.active {
+        border: 1px solid var(--accent);
+        background: var(--bg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div style="margin: 2rem 0">
+      <h1 style="font-size: 48px; text-align: center; margin: 0">Future Inventions</h1>
+      <p style="text-align: center; margin: 0; font-size: 14px;" >London - Abuja - Online</p>
+    </div>
+    <nav class="tabs">
+      <div class="tab active" data-tab="home">Home</div>
+      <div class="tab" data-tab="upcoming">Upcoming</div>
+      <div class="tab" data-tab="archive">Archive</div>
+      <div class="tab" data-tab="about">About</div>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="tab-content active">
+      <div class="intro-text">
+        <p><strong style="font-size: 32px;">Future Inventions Lab</strong> is a research & development lab prototyping liberatory afro technological futures.</p>
+        <p style="margin-top: 2rem">Through reading groups, participatory design sessions, and publications, the lab seeks to build a community of creative technologists, thinkers, and curious individuals who are invested in prototyping alternatives to what we understand as technology today.</p>
+      </div>
+      <img src="/images/fi_sankofa_2.gif" alt="Future Inventions Logo" class="logo" style="width: 400px; height: auto;">
+    </section>
+
+    <section id="upcoming" class="tab-content">
+      <h2>Upcoming Events</h2>
+      <div id="upcoming-events">Loading upcoming events...</div>
+    </section>
+
+    <section id="archive" class="tab-content">
+      <h2>Past Events</h2>
+      <div id="archive-events">Loading archive events...</div>
+    </section>
+
+    <section id="about" class="tab-content">
+      <h2>About Future Inventions</h2>
+      <p>Future Inventions is dedicated to exploring technological literacy through creative and critical study. Our events range from intimate workshops to public symposia focused on reimagining how technology shapes society.</p>
+      <h3>Contact</h3>
+      <p>Email: <a href="mailto:futureinventions.lab@gmail.com">futureinventions.lab@gmail.com</a></p>
+    </section>
+  </main>
+
+  <script>
+    // --- Tab logic ---
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+
+    // --- Mock data ---
+    const mockEvents = {
+      upcoming: [
+        {
+          title: "Workshop: Ecological Computing",
+          date: "November 2024",
+          description: "Exploring biodegradable materials in hardware design.",
+          link: "#"
+        },
+        {
+          title: "Study Session: Post-Digital Crafts",
+          date: "Dec 10, 2025",
+          description: "Collective discussion on materiality in the age of AI.",
+          link: "#"
+        }
+      ],
+      archive: [
+        {
+          title: "Intro to Digital Colonialism",
+          date: "November 2024",
+          description: "Week-long residency examining off-grid networks.",
+          image: "/images/sessions/digital_colonialism_1.jpeg",
+          link: "#"
+        },
+        {
+          title: "Ancestral Technologies",
+          date: "February 2025",
+          description: "Artists and technologists discussing collaborative futures.",
+          image: "/images/sessions/ancestral_tech_2.jpeg",
+          link: "#"
+        }
+      ]
+    };
+
+    function showTab(tabName) {
+      contents.forEach(c => c.classList.remove('active'));
+      const activeSection = document.getElementById(tabName);
+      if (activeSection) activeSection.classList.add('active');
+
+      tabs.forEach(t => t.classList.remove('active'));
+      tabs.forEach(t => { if (t.dataset.tab === tabName) t.classList.add('active'); });
+    }
+
+    // --- Handle tab clicks ---
+    tabs.forEach(tab => {
+      tab.addEventListener('click', e => {
+        const tabName = tab.dataset.tab;
+
+        // Update URL without reloading
+        // history.pushState({ tab: tabName }, '', '/' + tabName);
+
+        // Show the selected tab
+        showTab(tabName);
+      });
+    });
+
+    // --- Handle browser back/forward ---
+    // window.addEventListener('popstate', e => {
+    //   const tabName = e.state?.tab || 'home';
+    //   showTab(tabName);
+    // });
+
+    // // --- Show correct tab on initial load ---
+    // window.addEventListener('DOMContentLoaded', () => {
+    //   const path = window.location.pathname.replace('/', '') || 'home';
+    //   showTab(path);
+    // });
+
+    // --- Render events (shared logic) ---
+    function renderEvents(list, containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      list.forEach(event => {
+        const el = document.createElement('div');
+        el.className = 'event';
+        el.innerHTML = `
+          <img src="${event.image}" alt="${event.title}" style="width: 400px; height: auto;">
+          <div>
+            <h3>${event.title}</h3>
+            <p><strong>${event.date}</strong></p>
+            <p>${event.description}</p>
+            <a href="${event.link}" target="_blank">Learn more</a>
+          </div>
+        `;
+        container.appendChild(el);
+      });
+    }
+
+    // Initial render
+    renderEvents(mockEvents.upcoming, 'upcoming-events');
+    renderEvents(mockEvents.archive, 'archive-events');
+  </script>
+
+</body>
+</html>
