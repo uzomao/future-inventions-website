@@ -1,0 +1,172 @@
+:root {
+      --bg: #372FD1;
+      --accent: #caeeff;
+      --text: #ffffff;
+      --highlight: #c4bfa8;
+    }
+
+    body {
+      margin: 0;
+      font-family: monospace, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      background: url('/images/noisy.png');
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      content: '';
+      opacity: 0.5;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+   @font-face {
+      font-family: 'Awoma';
+      src: url('/fonts/Awoma.otf') format('opentype'),
+          url('/fonts/Awoma.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Awoma', monospace, system-ui, sans-serif;
+      letter-spacing: 5px;
+    }
+
+    a {
+      color: var(--text);
+      text-decoration: underline;
+    } a:hover {
+      color: var(--accent);
+    }
+
+    p {
+      line-height: 1.45;
+    }
+
+    header {
+      width: 100%;
+      margin-top: 2rem;
+    }
+
+    /* Folder-style tabs */
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0 2.5%;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .tab {
+      background: var(--text);
+      color: var(--bg);
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border: 1px solid var(--accent);
+      border-bottom: none;
+      transition: background 0.2s ease;
+    }
+
+    .tab.active {
+      background: var(--bg);
+      color: var(--text);
+      border-bottom: 2px solid var(--bg);
+      font-weight: 600;
+    }
+
+    .tab:hover {
+      background: var(--bg);
+      color: var(--text)
+    }
+
+    main {
+      width: 95%;
+      padding: 5% 0;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    #home.tab-content.active {
+      display: flex;
+      align-items: center;
+      gap: 10%;
+    }
+
+    #home .intro-text {
+      width: 70%;
+    }
+
+    #home .logo {
+      width: 20%;
+      height: auto;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(0.5rem); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Event styling */
+    .session {
+      border-top: 1px solid var(--accent);
+      padding: 3rem 0;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .session:first-child {
+      border-top: none;
+    }
+
+    .session h3 {
+      margin: 0 0 0.25rem;
+      font-size: 1.1rem;
+    }
+
+    .session p {
+      margin: 1.5rem 0;
+    }
+
+    .session a {
+      color: var(--text);
+      text-decoration: underline;
+    }
+
+    footer {
+      margin: 2rem 0;
+      font-size: 0.85rem;
+      color: #555;
+    }
+
+    /* Responsive design */
+    @media (max-width: 600px) {
+      .tabs {
+        flex-direction: column;
+        border-bottom: none;
+      }
+      .tab {
+        border-radius: 0.5rem;
+        border: 1px solid var(--accent);
+      }
+      .tab.active {
+        border: 1px solid var(--accent);
+        background: var(--bg);
+      }
+    }

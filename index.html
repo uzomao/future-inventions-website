@@ -3,169 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Future Inventions</title>
-  <style>
-    :root {
-      --bg: #372FD1;
-      --accent: #caeeff;
-      --text: #ffffff;
-      --highlight: #c4bfa8;
-    }
-
-    body {
-      margin: 0;
-      font-family: monospace, system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      position: relative;
-    }
-
-    body::before {
-      background: url('/images/noisy.png');
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      content: '';
-      opacity: 0.5;
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    a {
-      color: var(--text);
-      text-decoration: underline;
-    } a:hover {
-      color: var(--accent);
-    }
-
-    p {
-      line-height: 1.45;
-    }
-
-    header {
-      width: 100%;
-      margin-top: 2rem;
-    }
-
-    /* Folder-style tabs */
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      padding: 0 2.5%;
-      border-bottom: 2px solid var(--accent);
-    }
-
-    .tab {
-      background: var(--text);
-      color: var(--bg);
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      border: 1px solid var(--accent);
-      border-bottom: none;
-      transition: background 0.2s ease;
-    }
-
-    .tab.active {
-      background: var(--bg);
-      color: var(--text);
-      border-bottom: 2px solid var(--bg);
-      font-weight: 600;
-    }
-
-    .tab:hover {
-      background: var(--bg);
-      color: var(--text)
-    }
-
-    main {
-      width: 95%;
-      padding: 5% 0;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .tab-content {
-      display: none;
-      animation: fadeIn 0.4s ease;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    #home.tab-content.active {
-      display: flex;
-      align-items: center;
-      gap: 10%;
-    }
-
-    #home .intro-text {
-      width: 70%;
-    }
-
-    #home .logo {
-      width: 20%;
-      height: auto;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(0.5rem); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Event styling */
-    .session {
-      border-top: 1px solid var(--accent);
-      padding: 3rem 0;
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .session:first-child {
-      border-top: none;
-    }
-
-    .session h3 {
-      margin: 0 0 0.25rem;
-      font-size: 1.1rem;
-    }
-
-    .session p {
-      margin: 1.5rem 0;
-    }
-
-    .session a {
-      color: var(--text);
-      text-decoration: underline;
-    }
-
-    footer {
-      margin: 2rem 0;
-      font-size: 0.85rem;
-      color: #555;
-    }
-
-    /* Responsive design */
-    @media (max-width: 600px) {
-      .tabs {
-        flex-direction: column;
-        border-bottom: none;
-      }
-      .tab {
-        border-radius: 0.5rem;
-        border: 1px solid var(--accent);
-      }
-      .tab.active {
-        border: 1px solid var(--accent);
-        background: var(--bg);
-      }
-    }
-
-  </style>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Future Inventions is a research and development lab prototyping liberatory Afro-technological futures through workshops, reading groups, and digital experiments connecting creative technologists, thinkers, and communities across London, Abuja, and online.">
+  <title>Future Inventions Lab | Afro-Technological Futures Research & Community</title>
+  <meta property="og:title" content="Future Inventions Lab" />
+  <meta property="og:description" content="Prototyping liberatory Afro-technological futures through creative research and community." />
+  <meta property="og:image" content="/images/sankofa-blue.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://future-inventions.net" />
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="/images/favicon.png">
+  <meta name="theme-color" content="#372FD1">
+  <link rel="canonical" href="https://future-inventions.net/">
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
@@ -192,12 +41,12 @@
     </section>
 
     <section id="upcoming" class="tab-content">
-      <h2>Upcoming Events</h2>
+      <h1>Upcoming Events</h1>
       <div id="upcoming-events">Loading upcoming events...</div>
     </section>
 
     <section id="archive" class="tab-content">
-      <h2>Past Events</h2>
+      <h1>Past Events</h1>
       <div id="archive-events">Loading archive events...</div>
     </section>
 
@@ -285,7 +134,7 @@
         el.innerHTML = `
           <img src="${item.thumbnail}" alt="${item.title}" style="width: 400px; height: auto;">
           <div>
-            <h3>${item.title}</h3>
+            <h2>${item.title}</h2>
             <p><strong>${new Date(item.date).toLocaleDateString()}</strong></p>
             <p>Venue: ${item.venue}</p>
             <a href="/sessions.html?file=${slug}">Read Details</a>
@@ -338,6 +187,7 @@
           const container = document.getElementById(containerId);
           container.innerHTML = `
             <h1>${data.title}</h1>
+            <br/>
             <img src="${data.thumbnail}" alt="${data.title}" style="max-width: 50%; height: auto; margin-bottom: 1rem;">
             <p>${parseMarkdown(data.body)}</p>
           `;
