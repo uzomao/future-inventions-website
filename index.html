@@ -258,11 +258,13 @@
       return title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '');
     }
 
-    function renderSessions(list, containerId) {
+    function renderSessions(list, containerId, reverse = false) {
       const container = document.getElementById(containerId);
       container.innerHTML = '';
 
-      list.forEach(item => {
+      const newList = reverse ? list.slice().reverse() : list;
+
+      newList.forEach(item => {
         const slug = slugify(item.title);
         const el = document.createElement('div');
         el.className = 'session';
@@ -287,7 +289,7 @@
       const archive  = sessions.filter(s => new Date(s.date) < now);
 
       renderSessions(upcoming, 'upcoming-events');
-      renderSessions(archive, 'archive-events');
+      renderSessions(archive, 'archive-events', true);
     })();
 
     if (window.netlifyIdentity) {
