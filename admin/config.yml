@@ -30,3 +30,15 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Sessions", name: "sessions", widget: "list" }
+
+  - name: "about"
+    label: "About Page"
+    folder: "_pages"
+    create: true
+    extension: "json"
+    format: "json"
+    slug: "about"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Featured Image", name: "thumbnail", widget: "image" }
+      - { label: "Body", name: "body", widget: "markdown" }
