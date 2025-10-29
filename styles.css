@@ -177,7 +177,6 @@
   body {
     font-size: 16px;
     line-height: 1.6;
-    padding: 0 1rem;
     align-items: stretch;
   }
 
@@ -275,8 +274,9 @@
 
   /* Main container */
   main {
-    width: 100%;
-    padding: 2rem 0;
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: 2rem 1rem;
   }
 }
 
