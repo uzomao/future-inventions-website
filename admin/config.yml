@@ -54,3 +54,15 @@ collections:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Featured Image", name: "thumbnail", widget: "image" }
       - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "contact"
+    label: "Contact Page"
+    folder: "_pages"
+    create: true
+    extension: "json"
+    format: "json"
+    slug: "contact"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Featured Image", name: "thumbnail", widget: "image" }
+      - { label: "Body", name: "body", widget: "markdown" }
