@@ -28,6 +28,7 @@
       <div class="tab" data-tab="upcoming">Upcoming</div>
       <div class="tab" data-tab="archive">Archive</div>
       <div class="tab" data-tab="about">About</div>
+      <div class="tab" data-tab="contact">Contact</div>
     </nav>
   </header>
 
@@ -53,6 +54,10 @@
 
     <section id="about" class="tab-content">
       <div id="about-content">Loading about page...</div>
+    </section>
+
+    <section id="contact" class="tab-content">
+      <div id="contact-content">Loading contact page...</div>
     </section>
   </main>
 
@@ -196,11 +201,12 @@
         })
         .catch(err => {
           console.error('Error loading page:', err);
-          document.getElementById(containerId).innerText = 'Error loading about page.';
+          document.getElementById(containerId).innerText = 'Error loading page.';
         });
     }
 
     renderPageContent('about', 'about-content');
+    renderPageContent('contact', 'contact-content');
 
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", (user) => {
