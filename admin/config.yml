@@ -65,3 +65,16 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "work-with-us"
+    label: "Work With Us Page"
+    folder: "_pages"
+    create: true
+    extension: "json"
+    format: "json"
+    slug: "work-with-us"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Introduction", name: "introduction", widget: "text" }
+      - { label: "Opportunities", name: "opportunities", widget: "list", field: { label: "Opportunity", name: "opportunity", widget: "string" } }
+      - { label: "Form Prompt", name: "form_prompt", widget: "string" }

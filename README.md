@@ -18,6 +18,7 @@ Future Inventions Lab is a static website hosted on Netlify that showcases educa
 _sessions/        # Session event files (JSON format)
 _index/          # Index files for organizing sessions
 _pages/          # Static pages (about, contact, home)
+work-with-us.html # Work with us page and inquiry form
 admin/           # Decap CMS configuration
 images/          # Assets (uploads, sessions images)
 fonts/           # Custom fonts
@@ -68,6 +69,12 @@ Netlify Identity allows you to manage who can edit content through the CMS.
 - **Format**: JSON
 - **Fields**: Title, Featured Image, Body (markdown), and additional fields depending on page type
 - Update site content without touching HTML files
+
+#### Work With Us Page
+- **Location**: `_pages/work-with-us.json`
+- **Format**: JSON
+- **Fields**: Title, Introduction, Opportunities, and Form Prompt
+- The inquiry form is available at `/work-with-us.html` from the About navigation dropdown
 
 ## Session File Naming & Indexing System
 

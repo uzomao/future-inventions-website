@@ -1,0 +1,11 @@
+{
+  "title": "WORK WITH US",
+  "introduction": "As we grow, we are open to hosting gatherings and sharing our knowledge in different ways. You can reach out to us about:",
+  "opportunities": [
+    "Critical Technology Workshops",
+    "Programming events",
+    "Speaking engagements",
+    "Commissions (Research, Design, and Writing)"
+  ],
+  "form_prompt": "If you are interested, please fill in the form below:"
+}

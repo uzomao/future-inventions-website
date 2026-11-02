@@ -73,6 +73,40 @@
       border: 1px solid var(--accent);
       border-bottom: none;
       transition: background 0.2s ease;
+      font: inherit;
+    }
+
+    .tab-dropdown {
+      position: relative;
+    }
+
+    .tab-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 2;
+      min-width: max-content;
+      background: var(--text);
+      border: 1px solid var(--accent);
+    }
+
+    .tab-dropdown:hover .tab-dropdown-menu,
+    .tab-dropdown:focus-within .tab-dropdown-menu {
+      display: block;
+    }
+
+    .tab-dropdown-menu a {
+      display: block;
+      padding: 0.65rem 1rem;
+      color: var(--bg);
+      text-decoration: none;
+    }
+
+    .tab-dropdown-menu a:hover,
+    .tab-dropdown-menu a:focus {
+      background: var(--bg);
+      color: var(--text);
     }
 
     .tab.active {
@@ -201,7 +235,7 @@
   /* Tabs */
   .tabs {
     flex-direction: row;
-    overflow-x: auto;
+    overflow: visible;
     border-bottom: 2px solid var(--accent);
     gap: 0.5rem;
   }

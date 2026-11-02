@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles.css">
+  <meta name="description" content="Work with Future Inventions on workshops, events, speaking engagements, and commissions.">
+  <title>Work with us | Future Inventions Lab</title>
+  <style>
+    main {
+      max-width: 760px;
+      padding: 2rem 0;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    #work-with-us-content li + li {
+      margin-top: 0.5rem;
+    }
+
+    .tally-embed {
+      margin-top: 1.5rem;
+    }
+
+    .tally-embed iframe {
+      display: block;
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 2rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <a class="back-link" href="/">← Future Inventions</a>
+    <section id="work-with-us-content" aria-live="polite">
+      <h1>WORK WITH US</h1>
+      <p>Loading page...</p>
+    </section>
+
+    <div class="tally-embed">
+      <iframe
+        data-tally-src="https://tally.so/embed/q5LJ0d?alignLeft=1&amp;hideTitle=1&amp;transparentBackground=1&amp;dynamicHeight=1"
+        loading="lazy"
+        width="100%"
+        height="400"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+        title="Work with Future Inventions"
+      ></iframe>
+    </div>
+  </main>
+  <script src="https://tally.so/widgets/embed.js"></script>
+  <script>
+    async function loadWorkWithUsPage() {
+      const content = document.getElementById('work-with-us-content');
+      try {
+        const response = await fetch('/_pages/work-with-us.json');
+        if (!response.ok) throw new Error('Failed to load Work With Us page');
+
+        const data = await response.json();
+        const heading = document.createElement('h1');
+        heading.textContent = data.title;
+        const introduction = document.createElement('p');
+        introduction.textContent = data.introduction;
+        const opportunities = document.createElement('ul');
+        data.opportunities.forEach(opportunity => {
+          const item = document.createElement('li');
+          item.textContent = opportunity;
+          opportunities.appendChild(item);
+        });
+        const prompt = document.createElement('p');
+        prompt.textContent = data.form_prompt;
+        content.replaceChildren(heading, introduction, opportunities, prompt);
+      } catch (error) {
+        console.error(error);
+        content.innerHTML = '<h1>WORK WITH US</h1><p>We could not load this page. Please try again later.</p>';
+      }
+    }
+
+    loadWorkWithUsPage();
+  </script>
+</body>
+</html>
