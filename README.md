@@ -10,6 +10,7 @@ Future Inventions Lab is a static website hosted on Netlify that showcases educa
 - **Upcoming sessions** listing
 - **Archive** of past events
 - **About page** with project information
+- **Projects index** with links to CMS-managed project pages
 - **Sessions database** with detailed event information including dates, venues, descriptions, and thumbnail images
 
 ## Project Structure
@@ -17,7 +18,9 @@ Future Inventions Lab is a static website hosted on Netlify that showcases educa
 ```
 _sessions/        # Session event files (JSON format)
 _index/          # Index files for organizing sessions
-_pages/          # Static pages (about, contact, home)
+_pages/          # Static pages and the Projects index
+_projects/       # CMS-managed project page content
+projects/        # Project page templates
 work-with-us.html # Work with us page and inquiry form
 admin/           # Decap CMS configuration
 images/          # Assets (uploads, sessions images)
@@ -75,6 +78,12 @@ Netlify Identity allows you to manage who can edit content through the CMS.
 - **Format**: JSON
 - **Fields**: Title, Introduction, Opportunities, and Form Prompt
 - The inquiry form is available at `/work-with-us.html` from the About navigation dropdown
+
+#### Projects
+- **Index**: `_pages/projects.json`
+- **Project pages**: `_projects/` (JSON format)
+- Edit the Projects index and project page content in the **Projects Index** and **Project Pages** CMS collections
+- Optional project images can be added from each page’s Image field; otherwise an image placeholder is shown
 
 ## Session File Naming & Indexing System
 

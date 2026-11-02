@@ -78,3 +78,30 @@ collections:
       - { label: "Introduction", name: "introduction", widget: "text" }
       - { label: "Opportunities", name: "opportunities", widget: "list", field: { label: "Opportunity", name: "opportunity", widget: "string" } }
       - { label: "Form Prompt", name: "form_prompt", widget: "string" }
+
+  - name: "projects-index"
+    label: "Projects Index"
+    files:
+      - name: "projects"
+        label: "Projects Index"
+        file: "_pages/projects.json"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - label: "Projects"
+            name: "projects"
+            widget: "list"
+            fields:
+              - { label: "Page Title", name: "title", widget: "string" }
+              - { label: "Page Slug", name: "slug", widget: "string" }
+
+  - name: "project-pages"
+    label: "Project Pages"
+    folder: "_projects"
+    create: false
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Image", name: "thumbnail", widget: "image", required: false }
+      - { label: "Body", name: "body", widget: "markdown" }

@@ -1,0 +1,21 @@
+{
+  "title": "Projects",
+  "projects": [
+    {
+      "title": "Community Technology School",
+      "slug": "community-technology-school"
+    },
+    {
+      "title": "The Lab",
+      "slug": "the-lab"
+    },
+    {
+      "title": "Our Book!",
+      "slug": "our-book"
+    },
+    {
+      "title": "Our Artworks",
+      "slug": "our-artworks"
+    }
+  ]
+}
