@@ -178,6 +178,12 @@
       line-height: 1.6;
     }
 
+    .project-body img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
     .project-body h2,
     .project-body h3 {
       margin-top: 2rem;

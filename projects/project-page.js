@@ -4,23 +4,30 @@ function renderProjectMarkdown(markdown) {
   let list;
 
   function appendInlineMarkdown(element, text) {
-    const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g;
+    const markdownPattern = /(!?)\[([^\]]*)\]\(([^)]+)\)/g;
     let position = 0;
     let match;
 
-    while ((match = linkPattern.exec(text))) {
+    while ((match = markdownPattern.exec(text))) {
       element.appendChild(document.createTextNode(text.slice(position, match.index)));
       let url;
       try {
-        url = new URL(match[2], window.location.origin);
+        url = new URL(match[3], window.location.origin);
       } catch {
         url = null;
       }
 
-      if (url && ['http:', 'https:', 'mailto:'].includes(url.protocol)) {
+      if (match[1] === '!' && url && ['http:', 'https:'].includes(url.protocol)) {
+        const image = document.createElement('img');
+        image.src = url.href;
+        image.alt = match[2];
+        image.loading = 'lazy';
+        image.decoding = 'async';
+        element.appendChild(image);
+      } else if (!match[1] && url && ['http:', 'https:', 'mailto:'].includes(url.protocol)) {
         const link = document.createElement('a');
         link.href = url.href;
-        link.textContent = match[1];
+        link.textContent = match[2];
         if (url.protocol !== 'mailto:' && url.origin !== window.location.origin) {
           link.target = '_blank';
           link.rel = 'noopener noreferrer';
@@ -29,7 +36,7 @@ function renderProjectMarkdown(markdown) {
       } else {
         element.appendChild(document.createTextNode(match[0]));
       }
-      position = linkPattern.lastIndex;
+      position = markdownPattern.lastIndex;
     }
 
     element.appendChild(document.createTextNode(text.slice(position)));
