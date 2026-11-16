@@ -4,7 +4,7 @@ function renderPageMarkdown(markdown = '') {
   let list;
 
   function appendInlineMarkdown(element, text) {
-    const markdownPattern = /(!?)\[([^\]]*)\]\(([^)]+)\)/g;
+    const markdownPattern = /(!?)\[([^\]]*)\]\((\S+?)(?:\s+["']([^"']*)["'])?\)/g;
     let position = 0;
     let match;
 
@@ -21,6 +21,7 @@ function renderPageMarkdown(markdown = '') {
         const image = document.createElement('img');
         image.src = url.href;
         image.alt = match[2];
+        if (match[4]) image.title = match[4];
         image.loading = 'lazy';
         image.decoding = 'async';
         element.appendChild(image);
@@ -28,6 +29,7 @@ function renderPageMarkdown(markdown = '') {
         const link = document.createElement('a');
         link.href = url.href;
         link.textContent = match[2];
+        if (match[4]) link.title = match[4];
         if (url.protocol !== 'mailto:' && url.origin !== window.location.origin) {
           link.target = '_blank';
           link.rel = 'noopener noreferrer';
