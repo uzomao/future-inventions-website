@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles.css">
+  <meta name="description" content="Hiring at Future Inventions Lab.">
+  <title>Hiring | Future Inventions Lab</title>
+  <style>
+    .hiring-page {
+      max-width: 760px;
+      padding: 2rem 0;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    #hiring-content {
+      white-space: pre-wrap;
+    }
+
+    @media (max-width: 768px) {
+      .hiring-page {
+        padding: 2rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="hiring-page">
+    <a class="back-link" href="/">← Future Inventions</a>
+    <section aria-live="polite">
+      <h1 id="hiring-title">Hiring</h1>
+      <div id="hiring-content"></div>
+    </section>
+  </main>
+  <script>
+    async function loadHiringPage() {
+      const title = document.getElementById('hiring-title');
+      const content = document.getElementById('hiring-content');
+
+      try {
+        const response = await fetch('/_pages/hiring.json');
+        if (!response.ok) throw new Error('Failed to load Hiring page');
+
+        const data = await response.json();
+        title.textContent = data.title;
+        document.title = `${data.title} | Future Inventions Lab`;
+        content.textContent = data.body;
+      } catch (error) {
+        console.error(error);
+        content.textContent = 'We could not load this page. Please try again later.';
+      }
+    }
+
+    loadHiringPage();
+  </script>
+</body>
+</html>

@@ -79,6 +79,17 @@ collections:
       - { label: "Opportunities", name: "opportunities", widget: "list", field: { label: "Opportunity", name: "opportunity", widget: "string" } }
       - { label: "Form Prompt", name: "form_prompt", widget: "string" }
 
+  - name: "hiring"
+    label: "Hiring Page"
+    folder: "_pages"
+    create: false
+    slug: "hiring"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Body", name: "body", widget: "text" }
+
   - name: "projects-index"
     label: "Projects Index"
     files:
